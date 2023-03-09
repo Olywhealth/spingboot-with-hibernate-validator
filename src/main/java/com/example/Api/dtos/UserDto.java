@@ -1,5 +1,6 @@
 package com.example.Api.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -16,6 +17,6 @@ public class UserDto {
     @Size(min = 3, message = "Name should not be less than 3 alphabets")
     private String name;
     private String email;
-    @NotNull(message = "phone number should not be null")
+    @NotBlank(message = "phone number must not be empty")
     private String phoneNumber;
 }

@@ -4,7 +4,7 @@ import com.example.Api.dtos.ApiResponse;
 import com.example.Api.dtos.UserDto;
 import com.example.Api.entities.User;
 import com.example.Api.services.UserService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
