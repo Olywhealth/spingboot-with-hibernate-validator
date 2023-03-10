@@ -5,6 +5,7 @@ import com.example.Api.entities.User;
 import com.example.Api.exception.CustomException;
 import com.example.Api.repoository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -19,9 +20,8 @@ public class UserServiceImpl implements UserService{
             throw new CustomException("User with "+userDto.getEmail()+ " already exist");
         }
         User newUser = new User();
-        newUser.setName(userDto.getName());
-        newUser.setEmail(userDto.getEmail());
-        newUser.setPhoneNumber(userDto.getPhoneNumber());
+        ModelMapper mapper = new ModelMapper();
+        mapper.map(userDto, newUser);
         return userRepository.save(newUser);
     }
 }
