@@ -1,6 +1,7 @@
 package com.example.Api.services;
 
 import com.example.Api.dtos.UserDto;
+import com.example.Api.dtos.UsersDto;
 import com.example.Api.entities.User;
 import com.example.Api.exception.CustomException;
 import com.example.Api.repoository.UserRepository;
@@ -15,13 +16,16 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
     @Override
-    public User registerUser(UserDto userDto){
-        if (userRepository.findByEmail(userDto.getEmail()) != null) {
-            throw new CustomException("User with "+userDto.getEmail()+ " already exist");
+    public User registerUser(UsersDto userDto){
+        if (userRepository.findByEmail(userDto.email()) != null) {
+            throw new CustomException("User with "+userDto.email() + " already exist");
         }
         User newUser = new User();
-        ModelMapper mapper = new ModelMapper();
-        mapper.map(userDto, newUser);
+//        ModelMapper mapper = new ModelMapper();
+//        mapper.map(userDto, newUser);
+        newUser.setName(userDto.name());
+        newUser.setEmail(userDto.email());
+        newUser.setPhoneNumber(userDto.phoneNumber());
         return userRepository.save(newUser);
     }
 }

@@ -2,6 +2,7 @@ package com.example.Api.controller;
 
 import com.example.Api.dtos.ApiResponse;
 import com.example.Api.dtos.UserDto;
+import com.example.Api.dtos.UsersDto;
 import com.example.Api.entities.User;
 import com.example.Api.services.UserService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping("/createUser")
-    public ResponseEntity<ApiResponse<?>> createUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<ApiResponse<?>> createUser(@Valid @RequestBody UsersDto userDto){
         try {
             User newUser = userService.registerUser(userDto);
             return new ResponseEntity<>(new ApiResponse<>( "User successfully created", newUser), HttpStatus.CREATED);
