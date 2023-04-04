@@ -14,7 +14,7 @@ public record UsersDto(
         @NotBlank(message = "Name should not be null")
         @Size(min = 3, message = "Name should not be less than 3 alphabets")
         String name,
-        @NotBlank(message = "phone number must not be empty")
+        @NotBlank(message = "email must not be empty")
         String email,
         String phoneNumber) {
 }

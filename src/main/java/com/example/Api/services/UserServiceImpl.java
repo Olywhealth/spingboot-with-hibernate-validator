@@ -21,11 +21,8 @@ public class UserServiceImpl implements UserService{
             throw new CustomException("User with "+userDto.email() + " already exist");
         }
         User newUser = new User();
-//        ModelMapper mapper = new ModelMapper();
-//        mapper.map(userDto, newUser);
-        newUser.setName(userDto.name());
-        newUser.setEmail(userDto.email());
-        newUser.setPhoneNumber(userDto.phoneNumber());
+        ModelMapper mapper = new ModelMapper();
+        mapper.map(userDto, newUser);
         return userRepository.save(newUser);
     }
 }
