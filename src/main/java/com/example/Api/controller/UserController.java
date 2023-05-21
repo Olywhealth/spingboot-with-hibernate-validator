@@ -1,18 +1,16 @@
 package com.example.Api.controller;
 
 import com.example.Api.dtos.ApiResponse;
-import com.example.Api.dtos.UserDto;
 import com.example.Api.dtos.UsersDto;
 import com.example.Api.entities.User;
 import com.example.Api.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RequiredArgsConstructor
@@ -23,12 +21,15 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("/createUser")
-    public ResponseEntity<ApiResponse<?>> createUser(@Valid @RequestBody UsersDto userDto){
+    @PostMapping(value = "/createUser", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes ={MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ApiResponse<?>> createUser(@Valid @RequestPart("userDto") UsersDto userDto,
+                                                     @RequestParam("image") MultipartFile image) {
         try {
-            User newUser = userService.registerUser(userDto);
+            User newUser = userService.registerUser(userDto, image);
             return new ResponseEntity<>(new ApiResponse<>( "User successfully created", newUser), HttpStatus.CREATED);
         } catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(new ApiResponse<>(e.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
 
