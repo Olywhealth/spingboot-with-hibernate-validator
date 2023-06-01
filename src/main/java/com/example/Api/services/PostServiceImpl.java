@@ -9,8 +9,9 @@ import com.example.Api.repoository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
-//@AllArgsConstructor
 @Service
 public class PostServiceImpl implements PostService{
 
@@ -32,7 +33,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Void deletePost(Long id) {
-        return null;
+    public void deletePost(Long id) {
+        Optional<Post> post = postRepository.findById(id);
+        if(post.isEmpty()){
+            throw new CustomException("Post with ID: "+id+" does not exist");
+        }
+        postRepository.delete(post.get());
     }
 }

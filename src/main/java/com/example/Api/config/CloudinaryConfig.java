@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
-import static com.example.Api.constant.CloudinaryConstant.*;
+import static com.example.Api.constant.CloudinaryConstants.*;
 
 @Configuration
 public class CloudinaryConfig {

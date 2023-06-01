@@ -16,7 +16,6 @@ public record UsersDto(
         String name,
         @NotBlank(message = "email must not be empty")
         String email,
-        String phoneNumber,
-        String profilePic) {
+        String phoneNumber) {
 }
 

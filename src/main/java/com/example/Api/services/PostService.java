@@ -5,5 +5,5 @@ import com.example.Api.entities.Post;
 
 public interface PostService {
     Post createPost(PostDto postDto, String email);
-    Void deletePost(Long id);
+    void deletePost(Long id);
 }
