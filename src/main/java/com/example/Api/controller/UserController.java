@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user/v1/api")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     private final UserService userService;
@@ -33,5 +33,16 @@ public class UserController {
             return new ResponseEntity<>(new ApiResponse<>(e.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> getUniqueUser(@PathVariable Long id){
+        try {
+            var existingUser = userService.getUser(id);
+            return new ResponseEntity<>(new ApiResponse<>( "USER", existingUser), HttpStatus.CREATED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(new ApiResponse<>(e.getMessage(), null), HttpStatus.BAD_REQUEST);
+        }
     }
 }

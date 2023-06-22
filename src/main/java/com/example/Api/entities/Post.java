@@ -1,5 +1,6 @@
 package com.example.Api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,6 +18,8 @@ public class Post {
     private String title;
     private String description;
 
-    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 }

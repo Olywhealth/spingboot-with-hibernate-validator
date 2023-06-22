@@ -7,8 +7,12 @@ import com.example.Api.exception.CustomException;
 import com.example.Api.repoository.PostRepository;
 import com.example.Api.repoository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -31,6 +35,15 @@ public class PostServiceImpl implements PostService{
         return postRepository.save(newPost);
 
     }
+    @Override
+    @Cacheable(cacheNames = "post", key = "#id")
+    public Post getPostById(Long id){
+        Optional<Post> pst = postRepository.findById(id);
+        if(pst.isEmpty()){
+            throw new CustomException("Post with "+id+" does not exist");
+        }
+        return pst.get();
+    }
 
     @Override
     public void deletePost(Long id) {
@@ -39,5 +52,15 @@ public class PostServiceImpl implements PostService{
             throw new CustomException("Post with ID: "+id+" does not exist");
         }
         postRepository.delete(post.get());
+    }
+
+    @Override
+    public List<Post> getUserPost(Long id){
+        var userPost = postRepository.findPostsByUser_Id(id);
+        if(userPost.isEmpty()){
+            return new ArrayList<>();
+        }
+        userPost.sort(Comparator.comparing(Post::getId).reversed());
+        return userPost;
     }
 }
