@@ -17,6 +17,7 @@ public class Post {
     private String name;
     private String title;
     private String description;
+//    private String test;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
